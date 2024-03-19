@@ -2,11 +2,18 @@
 #define COUNTER_H
 
 #include <QObject>
+#include <QLineEdit>
 
-class Counter
+class Counter: public QLineEdit
 {
+    Q_OBJECT
 public:
-    Counter();
+    Counter(const QString &contents, QWidget *parent = nullptr);
+public slots:
+    void add_one();
+signals:
+    void tick_signal();
 };
+
 
 #endif // COUNTER_H

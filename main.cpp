@@ -4,7 +4,7 @@
 
 int main(int argc, char *argv[])
 {
-    QApplication app(argc, argv); // создание объекта-приложения
+    QApplication app(argc, argv);
     MainWin mainwin;
     mainwin.show();
     return app.exec();

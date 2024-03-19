@@ -4,28 +4,19 @@
 #include <QWidget>
 #include <QPushButton>
 #include <QLabel>
-#include <QBoxLayout>
-#include <QLineEdit>
-#include <QMessageBox>
-#include "strvalidator.h"
+#include "counter.h"
 
-class MainWin:public QWidget // класс окна
+class MainWin: public QWidget
 {
-    Q_OBJECT // макрос Qt, обеспечивающий корректное создание сигналов и слотов
+    Q_OBJECT
 protected:
     QTextCodec *codec;
-    QFrame *frame; // рамка
-    QLabel *inputLabel; // метка ввода
-    QLineEdit *inputEdit; // строчный редактор ввода
-    QLabel *outputLabel; // метка вывода
-    QLineEdit *outputEdit; // строчный редактор вывода
-    QPushButton *nextButton; // кнопка Следующее
-    QPushButton *exitButton; // кнопка Выход
+    QLabel *label1, *label2;
+    Counter *counter1, *counter2;
+    QPushButton *calcbutton;
+    QPushButton *exitbutton;
 public:
-    MainWin(QWidget *parent = nullptr); // конструктор
-    public slots:
-    void begin(); // метод начальной настройки интерфейса
-    void calc(); // метод реализации вычислений
+    MainWin(QWidget *parent = 0);
 };
 
 #endif // MAINWIN_H

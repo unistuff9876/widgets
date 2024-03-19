@@ -1,104 +1,55 @@
 #include "mainwin.h"
 
-MainWin::MainWin(QWidget *parent):QWidget(parent)
+#include <QBoxLayout>
+
+MainWin::MainWin(QWidget *parent): QWidget(parent)
 {
-    setWindowTitle("Возведение в квадрат");
+    setWindowTitle("Счетчик");
 
-    frame = new QFrame(this);
-    frame->setFrameShadow(QFrame::Raised);
-    frame->setFrameShape(QFrame::Panel);
+    label1 = new QLabel("Cчет по 1", this);
+    label2 = new QLabel("Cчет по 5", this);
+    counter1 = new Counter("0", this);
+    counter2 = new Counter("0", this);
+    calcbutton = new QPushButton("+1", this);
+    exitbutton = new QPushButton("Выход", this);
 
-    inputLabel = new QLabel("Введите число:", this);
-    inputEdit = new QLineEdit("",this);
+    QHBoxLayout *layout1 = new QHBoxLayout();
+    layout1->addWidget(label1);
+    layout1->addWidget(label2);
 
-    StrValidator *v = new StrValidator(inputEdit);
-    inputEdit->setValidator(v);
+    QHBoxLayout *layout2 = new QHBoxLayout();
+    layout2->addWidget(counter1);
+    layout2->addWidget(counter2);
 
-    outputLabel = new QLabel("Результат:", this);
-    outputEdit = new QLineEdit("",this);
-    nextButton = new QPushButton("Следующее", this);
-    exitButton = new QPushButton("Выход", this);
+    QHBoxLayout *layout3 = new QHBoxLayout();
+    layout3->addWidget(calcbutton);
+    layout3->addWidget(exitbutton);
 
-    QVBoxLayout *vLayout1 = new QVBoxLayout(frame);
-    vLayout1->addWidget(inputLabel);
-    vLayout1->addWidget(inputEdit);
-    vLayout1->addWidget(outputLabel);
-    vLayout1->addWidget(outputEdit);
-    vLayout1->addStretch();
+    QVBoxLayout *layout4 = new QVBoxLayout(this);
+    layout4->addLayout(layout1);
+    layout4->addLayout(layout2);
+    layout4->addLayout(layout3);
 
-    QVBoxLayout *vLayout2 = new QVBoxLayout();
-    vLayout2->addWidget(nextButton);
-    vLayout2->addWidget(exitButton);
-    vLayout2->addStretch();
-
-    QHBoxLayout *hLayout = new QHBoxLayout(this);
-    hLayout->addWidget(frame);
-    hLayout->addLayout(vLayout2);
-
-    begin();
-
+    // связь сигнала нажатия кнопки и слота закрытия окна
     connect
     (
-        exitButton,
+        calcbutton,
+        QPushButton::clicked,
+        counter1,
+        Counter::add_one
+    );
+    connect
+    (
+        counter1,
+        Counter::tick_signal,
+        counter2,
+        Counter::add_one
+    );
+    connect
+    (
+        exitbutton,
         QPushButton::clicked,
         this,
         MainWin::close
     );
-    connect
-    (
-        nextButton,
-        QPushButton::clicked,
-        this,
-        MainWin::begin
-    );
-    connect
-    (
-        inputEdit,
-        QLineEdit::returnPressed,
-        this,
-        MainWin::calc
-    );
-}
-
-void MainWin::begin()
-{
-    inputEdit->clear();
-    nextButton->setEnabled(false);
-    nextButton->setDefault(false);
-    inputEdit->setEnabled(true);
-    outputLabel->setVisible(false);
-    outputEdit->setVisible(false);
-    outputEdit->setEnabled(false);
-    inputEdit->setFocus();
-}
-
-void MainWin::calc()
-{
-    bool Ok=true; float r,a;
-    QString str=inputEdit->text();
-    a=str.toDouble(&Ok);
-    if (Ok)
-    {
-        r=a*a;
-        str.setNum(r);
-        outputEdit->setText(str);
-        inputEdit->setEnabled(false);
-        outputLabel->setVisible(true);
-        outputEdit->setVisible(true);
-        nextButton->setDefault(true);
-        nextButton->setEnabled(true);
-        nextButton->setFocus();
-    }
-    else
-    if (!str.isEmpty())
-    {
-        QMessageBox msgBox
-        (
-            QMessageBox::Information,
-            "Возведение в квадрат.",
-            "Введено неверное значение.",
-            QMessageBox::Ok
-        );
-        msgBox.exec();
-    }
 }
