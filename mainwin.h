@@ -9,7 +9,7 @@
 #include <QMessageBox>
 #include "strvalidator.h"
 
-class MainWin:public QWidget // класс окна
+class MainWin: public QWidget // класс окна
 {
     Q_OBJECT // макрос Qt, обеспечивающий корректное создание сигналов и слотов
 protected:
@@ -24,7 +24,7 @@ protected:
 public:
     MainWin(QWidget *parent = nullptr); // конструктор
     public slots:
-    void begin(); // метод начальной настройки интерфейса
+    void init(); // метод начальной настройки интерфейса
     void calc(); // метод реализации вычислений
 };
 

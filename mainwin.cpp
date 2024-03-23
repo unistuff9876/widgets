@@ -35,7 +35,7 @@ MainWin::MainWin(QWidget *parent):QWidget(parent)
     hLayout->addWidget(frame);
     hLayout->addLayout(vLayout2);
 
-    begin();
+    init();
 
     connect
     (
@@ -49,7 +49,7 @@ MainWin::MainWin(QWidget *parent):QWidget(parent)
         nextButton,
         QPushButton::clicked,
         this,
-        MainWin::begin
+        MainWin::init
     );
     connect
     (
@@ -60,7 +60,7 @@ MainWin::MainWin(QWidget *parent):QWidget(parent)
     );
 }
 
-void MainWin::begin()
+void MainWin::init()
 {
     inputEdit->clear();
     nextButton->setEnabled(false);
