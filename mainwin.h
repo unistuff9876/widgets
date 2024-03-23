@@ -13,10 +13,10 @@ protected:
     QTextCodec *codec;
     QLabel *label1, *label2;
     Counter *counter1, *counter2;
-    QPushButton *calcbutton;
-    QPushButton *exitbutton;
+    QPushButton *calcButton;
+    QPushButton *exitButton;
 public:
-    MainWin(QWidget *parent = 0);
+    MainWin(QWidget *parent = nullptr);
 };
 
 #endif // MAINWIN_H
