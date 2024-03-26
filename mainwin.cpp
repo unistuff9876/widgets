@@ -24,7 +24,7 @@ MainWin::MainWin(QWidget *parent):QWidget(parent)
     vLayout1->addWidget(inputEdit);
     vLayout1->addWidget(outputLabel);
     vLayout1->addWidget(outputEdit);
-    vLayout1->addStretch();
+    vLayout1->addStretch(1);
 
     QVBoxLayout *vLayout2 = new QVBoxLayout();
     vLayout2->addWidget(nextButton);
@@ -74,20 +74,34 @@ void MainWin::init()
 
 void MainWin::calc()
 {
-    bool Ok=true; float r,a;
-    QString str=inputEdit->text();
-    a=str.toDouble(&Ok);
+    bool Ok = true;
+    float r, a;
+    QString str = inputEdit->text();
+    a = str.toDouble(&Ok);
     if (Ok)
     {
-        r=a*a;
-        str.setNum(r);
-        outputEdit->setText(str);
-        inputEdit->setEnabled(false);
-        outputLabel->setVisible(true);
-        outputEdit->setVisible(true);
-        nextButton->setDefault(true);
-        nextButton->setEnabled(true);
-        nextButton->setFocus();
+        r = a * a;
+        if (r != std::numeric_limits<float>::infinity()) {
+            str.setNum(r);
+            outputEdit->setText(str);
+            inputEdit->setEnabled(false);
+            outputLabel->setVisible(true);
+            outputEdit->setVisible(true);
+            nextButton->setDefault(true);
+            nextButton->setEnabled(true);
+            nextButton->setFocus();
+        }
+        else
+        {
+            QMessageBox msgBox
+            (
+                QMessageBox::Information,
+                "Возведение в квадрат.",
+                "Переполнение - введенное число слишком большое.",
+                QMessageBox::Ok
+            );
+            msgBox.exec();
+        }
     }
     else
     if (!str.isEmpty())
