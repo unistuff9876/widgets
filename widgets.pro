@@ -17,8 +17,10 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += main.cpp \
     mainwin.cpp \
-    shapes.cpp
+    shapes.cpp \
+    drawingarea.cpp
 
 HEADERS += \
     mainwin.h \
-    shapes.h
+    shapes.h \
+    drawingarea.h

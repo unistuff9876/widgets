@@ -1,5 +1,9 @@
 #include <QApplication>
+
+#include "shapes.h"
+#include "drawingarea.h"
 #include "mainwin.h"
+
 #include "mainwin.cpp"
 
 int main(int argc, char *argv[])
